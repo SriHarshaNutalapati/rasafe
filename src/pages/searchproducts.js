@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAsyncError, useLoaderData, useLocation } from "react-router-dom";
 import { backendFetchUrl } from "../utils/api";
 import Productcard from "../components/productCard";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Image } from "react-bootstrap";
 import RangeSlider from "react-bootstrap-range-slider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -110,9 +110,17 @@ function SearchProducts(props){
                                 <h1>Search Results for: {state.state.search}</h1>
                                 <Container>
                                     <Row>
-                                        {filteredProducts.length && filteredProducts.map(result => (
+                                        {filteredProducts.length?filteredProducts.map(result => (
                                             <Productcard product={result} classname={"searchCard"} showAddToCart={true}></Productcard>
-                                        ))} 
+                                        )):(
+                                            <>
+                                                <div className="emptyCartScreen" style={{display: "flex", alignItems: "center", marginTop: "1rem"}}>
+                                                    <Image src="https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png" style={{height: "200px"}} />
+                                                    <h2>Uh oh! No products found for your filter</h2>
+                                                    <Button className="filterCancel rasabtn deletebtn" onClick={cancelFilter}>Cancel Filter</Button>
+                                                </div>
+                                            </>
+                                        )} 
                                     </Row>
                                 </Container>
                             </Col>
